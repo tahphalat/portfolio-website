@@ -5,7 +5,7 @@ const mainCards = [
     id: "projects",
     title: "Projects",
     description:
-      "Featured work with quick context and outcomes. Case studies for growth analytics, workflow OS, and this portfolio.",
+      "Data-forward work: analytics dashboards, pipelines, and decision tools shipped end-to-end with clear outcomes.",
     href: "/projects",
   },
   {
@@ -56,6 +56,14 @@ export default function Home() {
                 {link.label}
               </a>
             ))}
+            <div>
+              <Link
+                href="/projects"
+                className="min-w-[140px] rounded-full bg-[var(--color-accent)] px-6 py-3 text-lg font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+              >
+                Get started →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -81,7 +89,7 @@ export default function Home() {
             href={card.href}
             className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-surface)] transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
           >
-            Learn more
+            Learn more →
           </Link>
         </section>
       ))}
