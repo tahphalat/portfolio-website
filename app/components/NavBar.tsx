@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,15 +11,29 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { label: "Home", href: "/" },
-  { label: "Projects", href: "/projects" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-  { label: "Resume", href: "/resume", accent: true }
+  { label: "Home", href: "/#hero" },
+  { label: "Projects", href: "/#projects" },
+  { label: "About", href: "/#about" },
+  { label: "Contact", href: "/#contact" },
+  { label: "Resume", href: "/resume", accent: true },
 ];
 
 export default function NavBar() {
   const pathname = usePathname();
+  const [activeHash, setActiveHash] = useState(() => {
+    if (typeof window === "undefined") return "#hero";
+    return window.location.hash || "#hero";
+  });
+
+  useEffect(() => {
+    const updateHash = () => {
+      if (typeof window === "undefined") return;
+      setActiveHash(window.location.hash || "#hero");
+    };
+
+    window.addEventListener("hashchange", updateHash);
+    return () => window.removeEventListener("hashchange", updateHash);
+  }, []);
 
   return (
     <header className="sticky top-0 z-20 border-b border-[var(--color-border)] bg-[var(--color-surface)]/95 backdrop-blur">
@@ -30,7 +45,11 @@ export default function NavBar() {
         </Link>
         <nav className="flex items-center gap-6 text-base font-semibold text-[var(--color-text)]">
           {navItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isAnchor = item.href.startsWith("/#");
+            const targetHash = isAnchor ? `#${item.href.split("#")[1] || ""}` : "";
+            const isActive = isAnchor
+              ? pathname === "/" && activeHash === targetHash
+              : pathname === item.href;
             const accentClasses = item.accent
               ? "rounded bg-[var(--color-surface-muted)] px-4 py-2 transition-colors hover:bg-[var(--color-border)]"
               : "px-1.5 py-2 transition-colors hover:text-[var(--color-text)]";
