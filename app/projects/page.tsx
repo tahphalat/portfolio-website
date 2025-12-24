@@ -9,45 +9,49 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   return (
-    <section className="flex flex-1 flex-col gap-12">
-      <div className="rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-10 text-left shadow-[0_18px_50px_-30px_rgba(15,20,25,0.3)] md:p-14">
-        <div className="space-y-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-text-secondary)]">
-            Data projects
-          </p>
-          <h1 className="text-4xl font-semibold text-[var(--color-text)] sm:text-5xl">
-            Projects
-          </h1>
-          <p className="max-w-3xl text-lg leading-relaxed text-[var(--color-text-secondary)]">
-            Work focused on analytics, data pipelines, and decision tools. Each card
-            links to the deeper case study.
-          </p>
-        </div>
+    <section className="flex flex-1 flex-col gap-8">
+      {/* Header */}
+      <div className="tech-border relative bg-[var(--color-surface-muted)] p-10 md:p-14">
+        <div className="absolute top-0 left-0 h-6 w-6 border-t-2 border-l-2 border-[var(--color-accent)]" />
+        <div className="absolute bottom-0 right-0 h-6 w-6 border-b-2 border-r-2 border-[var(--color-accent)]" />
+        
+        <p className="text-xs font-bold uppercase tracking-[0.3em] text-[var(--color-accent)]">
+          Data Products
+        </p>
+        <h1 className="mt-2 text-5xl font-black text-[var(--color-text)] sm:text-6xl">
+          Projects
+        </h1>
+        <p className="mt-4 max-w-2xl text-lg text-[var(--color-text-secondary)]">
+          Work focused on analytics, data pipelines, and decision tools.
+        </p>
       </div>
 
+      {/* Project Grid */}
       <div className="grid gap-6 md:grid-cols-2">
-        {projects.map((project, index) => (
-          <article
+        {projects.map((project) => (
+          <Link
             key={project.slug}
-            className="flex h-full flex-col justify-between rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-left shadow-[0_1px_0_rgba(0,0,0,0.04)] transition hover:-translate-y-1 hover:shadow-[0_12px_30px_-20px_rgba(15,20,25,0.35)]"
+            href={`/projects/${project.slug}`}
+            className="tech-border group relative flex flex-col justify-between bg-[var(--color-surface-muted)] p-8 transition hover:border-[var(--color-accent)]"
           >
-            <div className="space-y-3">
-              <div className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">
+            {/* Corner Accent */}
+            <div className="absolute top-0 left-0 h-4 w-4 border-t-2 border-l-2 border-[var(--color-accent)] opacity-0 transition-opacity group-hover:opacity-100" />
+            
+            <div className="space-y-4">
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-accent)]">
                 {project.timeline}
-              </div>
-              <h2 className="text-2xl font-semibold text-[var(--color-text)]">
-                {project.title}
+              </span>
+              <h2 className="text-2xl font-black uppercase leading-tight text-[var(--color-text)]">
+                {project.title.split('—')[0].trim()}
               </h2>
-              <p className="text-base leading-relaxed text-[var(--color-text-secondary)] whitespace-pre-line">
-                {index === 0
-                  ? "แดชบอร์ด JobScope: วิเคราะห์ตลาดงานจาก job postings เพื่อหา “ทักษะที่ต้องมี”, “ตำแหน่งที่มาแรง”, และ “แนวโน้มการจ้างงาน” แบบเข้าใจทันที.\nHighlights: End-to-end data pipeline, Insights: Top skills/roles/companies/locations, เปิดดูผลลัพธ์จริงผ่านเว็บ (Streamlit)."
-                  : project.summary}
+              <p className="line-clamp-2 text-sm text-[var(--color-text-secondary)]">
+                {project.summary}
               </p>
               <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
+                {project.tags.slice(0, 3).map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-[var(--color-border)] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
+                    className="border border-[var(--color-border)] px-2 py-1 text-xs font-bold uppercase text-[var(--color-text-secondary)]"
                   >
                     {tag}
                   </span>
@@ -55,25 +59,26 @@ export default function ProjectsPage() {
               </div>
             </div>
 
-            <Link
-              href={`/projects/${project.slug}`}
-              className="mt-6 inline-flex items-center justify-center rounded-full bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-surface)] transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
-            >
-              Learn more →
-            </Link>
-          </article>
+            {/* Arrow */}
+            <div className="mt-6 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[var(--color-accent)] transition group-hover:translate-x-1">
+              <span>View Project</span>
+              <span className="text-lg">→</span>
+            </div>
+          </Link>
         ))}
       </div>
+
+      {/* Navigation */}
       <div className="flex items-center justify-between gap-3">
         <Link
           href="/"
-          className="inline-flex items-center justify-center rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-text)] transition hover:-translate-y-0.5 hover:border-[var(--color-text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text)]"
+          className="inline-flex items-center justify-center border border-[var(--color-border)] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[var(--color-text)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
         >
           ← Home
         </Link>
         <Link
           href="/about"
-          className="inline-flex items-center justify-center rounded-full bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-surface)] transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
+          className="inline-flex items-center justify-center bg-[var(--color-accent)] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white transition hover:brightness-110"
         >
           About →
         </Link>

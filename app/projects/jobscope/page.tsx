@@ -1,19 +1,14 @@
+
+"use client";
+
 import Link from "next/link";
-import type { Metadata } from "next";
+import { useState, useEffect } from "react";
+import { Header } from "./components/Header";
+import { StatsOverview } from "./components/StatsOverview";
+import { SkillTrends } from "./components/SkillTrends";
 
 const heroSubtitle =
-  "แพลตฟอร์มวิเคราะห์ตลาดงานจาก job postings: สร้าง pipeline เพื่อทำความสะอาด/แปลงข้อมูล แล้วสรุปเป็น insight ผ่านแดชบอร์ดแบบ interactive";
-
-const problem = [
-  "ประกาศงานกระจัดกระจาย อ่านทีละโพสต์ไม่เห็นภาพรวม",
-  'อยากรู้ว่า “ทักษะไหนต้องมี”, “ตำแหน่งไหนกำลังมา”, “บริษัท/โลเคชันไหนรับเยอะ” แต่ข้อมูลดิบไม่พร้อมใช้ (ซ้ำ, missing, format ไม่ตรงกัน)',
-];
-
-const goal = [
-  "สร้าง End-to-End pipeline ที่เปลี่ยน raw postings → curated analytics dataset",
-  "สรุปเป็น dashboard ที่กดดู/กรองข้อมูลได้",
-  "ออกแบบให้ต่อยอดไปสู่ recommendation (skill gap / role matching) ได้ในอนาคต",
-];
+  "End-to-end data pipeline สำหรับวิเคราะห์ตลาดงาน: จาก raw job postings → curated insight พร้อม interactive dashboard";
 
 const architecture = [
   "Extract: CSV/JSON/API → raw storage",
@@ -22,243 +17,142 @@ const architecture = [
   "Serve: Streamlit dashboard (interactive)",
 ];
 
-const features = [
-  {
-    title: "Skill Demand Insights",
-    description: "Top skills, keyword frequency, และเทรนด์การเติบโตของสกิลตามช่วงเวลา",
-  },
-  {
-    title: "Role & Company Breakdown",
-    description: "เห็นตำแหน่งไหนเปิดเยอะ บริษัท/อุตสาหกรรมไหนกำลังรับ และโอกาสในแต่ละเซ็กเมนต์",
-  },
-  {
-    title: "Location / Work Type",
-    description: "แยก remote/hybrid/on-site และกระจายตัวตามเมือง/ประเทศ (ถ้ามีข้อมูล)",
-  },
-  {
-    title: "Interactive Filters",
-    description: "กรองตามช่วงเวลา หมวดหมู่ คีย์เวิร์ด เพื่อเจาะลึก insight ที่ต้องการ",
-  },
-  {
-    title: "Reusable Data Pipeline",
-    description: "รันใหม่ได้เป็นสเตจชัดเจน แก้/เพิ่มแหล่งข้อมูลได้โดยไม่กระทบการเสิร์ฟ",
-  },
-];
-
 const stack = [
-  "Python (Pandas สำหรับ cleaning/feature engineering)",
-  "SQL (aggregation/query layer ถ้ามี)",
-  "Streamlit (dashboard interactive)",
-  "Parquet/CSV (storage format)",
-  "Optional: Airflow / Docker / GitHub Actions (รองรับ scheduling/CI ถ้ามี)",
+  "Python (Pandas)",
+  "SQL Aggregation",
+  "Streamlit",
+  "Parquet/CSV",
 ];
-
-const results = [
-  "Processed XX,XXX job postings into curated dataset",
-  "Reduced memory usage by ~XX% via optimized types / column selection",
-  "Delivered X+ interactive charts + filters for exploration",
-];
-
-const improvements = [
-  "Add incremental update / scheduling (daily/weekly refresh)",
-  "Add data quality checks + monitoring",
-  "Add recommendation: “skills you’re missing” จาก JD ที่สนใจ",
-  "Add API layer (FastAPI) ให้ frontend (Next.js) เรียกใช้",
-];
-
-const screenshots = [
-  { title: "Overview dashboard", alt: "JobScope overview dashboard" },
-  { title: "Skill demand view", alt: "Skill demand and trends" },
-  { title: "Role/company breakdown", alt: "Role and company breakdown" },
-];
-
-export const metadata: Metadata = {
-  title: "JobScope — Job Market Analytics & Recommendation-Ready Dataset | Phalat Lorratthanan",
-  description:
-    "End-to-end pipeline + interactive dashboard from raw job postings to insights on top skills, roles, companies, and locations.",
-};
 
 export default function JobScopePage() {
-  return (
-    <article className="flex flex-1 flex-col gap-12 rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-10 text-left shadow-[0_18px_50px_-30px_rgba(15,20,25,0.3)] md:p-14">
-      <div className="space-y-4">
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-text-secondary)]">
-          2024 · Data Product
-        </p>
-        <h1 className="text-4xl font-semibold text-[var(--color-text)] sm:text-5xl">
-          JobScope — Job Market Analytics & Recommendation-Ready Dataset
-        </h1>
-        <p className="text-lg leading-relaxed text-[var(--color-text-secondary)]">
-          {heroSubtitle}
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <a
-            href="https://jobscope.streamlit.app/"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center rounded-full bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-surface)] transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
-          >
-            Open Live Demo →
-          </a>
-          <a
-            href="https://github.com/your-handle/jobscope"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-text)] transition hover:-translate-y-0.5 hover:border-[var(--color-text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text)]"
-          >
-            View Source Code →
-          </a>
-          <a
-            href="https://www.kaggle.com/"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-text)] transition hover:-translate-y-0.5 hover:border-[var(--color-text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text)]"
-          >
-            Dataset →
-          </a>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {["Data Pipeline", "Analytics", "Streamlit", "Python"].map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full border border-[var(--color-border)] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
+  const [stats, setStats] = useState<any[]>([]);
+  const [skills, setSkills] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-      <section className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-6 shadow-[0_1px_0_rgba(0,0,0,0.04)]">
-          <h2 className="text-xl font-semibold text-[var(--color-text)]">Problem</h2>
-          <ul className="mt-3 space-y-2 text-[var(--color-text-secondary)]">
-            {problem.map((item) => (
-              <li key={item} className="text-base leading-relaxed">
-                {item}
-              </li>
-            ))}
-          </ul>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch Skills
+        const skillsRes = await fetch("/data/skills.json");
+        const skillsData = await skillsRes.json();
+        setSkills(skillsData.slice(0, 5));
+
+        // Fetch KPI stats
+        const kpiRes = await fetch("/data/kpi_summary.json");
+        const kpiData = await kpiRes.json();
+        
+        setStats([
+          { 
+            label: "Total Jobs", 
+            value: kpiData.total_jobs?.toLocaleString() || "-", 
+            subtext: "Processed" 
+          },
+          { 
+            label: "Companies", 
+            value: kpiData.unique_companies?.toLocaleString() || "-", 
+            subtext: "Unique" 
+          },
+          { 
+            label: "Top Location", 
+            value: kpiData.top_locations?.[0]?.location_text || "US", 
+            subtext: `${kpiData.top_locations?.[0]?.count?.toLocaleString()} jobs` 
+          },
+        ]);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <article className="flex flex-1 flex-col gap-8">
+      
+      {/* HEADER SECTION */}
+      <Header
+        title="JobScope"
+        subtitle={heroSubtitle}
+        links={{
+          demo: "https://jobscope.streamlit.app/",
+          github: "https://github.com/your-handle/jobscope",
+        }}
+        tags={["Data Pipeline", "Analytics", "Streamlit", "Python"]}
+      />
+
+      {/* STATS + SKILLS ROW */}
+      <section className="space-y-6">
+        <div className="flex items-center justify-between">
+            <h2 className="text-lg font-black text-[var(--color-accent)]">Key Metrics</h2>
+            {loading && <span className="text-xs text-[var(--color-text-secondary)]">Loading...</span>}
         </div>
-        <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-6 shadow-[0_1px_0_rgba(0,0,0,0.04)]">
-          <h2 className="text-xl font-semibold text-[var(--color-text)]">Goal</h2>
-          <ul className="mt-3 space-y-2 text-[var(--color-text-secondary)]">
-            {goal.map((item) => (
-              <li key={item} className="text-base leading-relaxed">
-                {item}
-              </li>
-            ))}
-          </ul>
+        
+        <StatsOverview stats={stats} />
+
+        <div className="grid gap-6 lg:grid-cols-2">
+            <SkillTrends skills={skills} />
+            
+            {/* CTA Card */}
+            <a
+              href="https://jobscope.streamlit.app/"
+              target="_blank"
+              rel="noreferrer"
+              className="tech-border group relative flex flex-col justify-between bg-[var(--color-surface-muted)] p-8 transition hover:border-[var(--color-accent)]"
+            >
+              <div className="absolute top-0 left-0 h-4 w-4 border-t-2 border-l-2 border-[var(--color-accent-secondary)]" />
+              <div>
+                <h3 className="text-xl font-black text-[var(--color-text)]">Explore the Full Dashboard</h3>
+                <p className="mt-2 text-[var(--color-text-secondary)]">
+                  ดูข้อมูลแบบ interactive, กรองตาม skill/location, และสำรวจ job listings เพิ่มเติม
+                </p>
+              </div>
+              <div className="mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[var(--color-accent)] transition group-hover:translate-x-1">
+                <span>Launch Streamlit Demo</span>
+                <span className="text-xl">→</span>
+              </div>
+            </a>
         </div>
       </section>
 
-      <section className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-6 shadow-[0_1px_0_rgba(0,0,0,0.04)]">
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">Solution Overview</h2>
-        <p className="mt-2 text-base leading-relaxed text-[var(--color-text-secondary)]">
-          Architecture แบบอ่านง่าย: จาก raw postings → cleaned data → analytics → dashboard พร้อมต่อยอดสู่ recommendation.
-        </p>
+      {/* ARCHITECTURE SECTION */}
+      <section className="tech-border relative bg-[var(--color-surface-muted)] p-8">
+        <div className="absolute top-0 left-0 h-4 w-4 border-t-2 border-l-2 border-[var(--color-accent)]" />
+        <h2 className="text-lg font-black text-[var(--color-accent)]">Solution Architecture</h2>
         <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-          {architecture.map((step) => (
+          {architecture.map((step, i) => (
             <div
               key={step}
-              className="rounded-xl border border-[var(--color-border)] bg-white p-4 text-sm font-semibold text-[var(--color-text)] shadow-[0_1px_0_rgba(0,0,0,0.04)]"
+              className="border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-sm font-semibold text-[var(--color-text)]"
             >
+              <span className="mr-2 font-mono text-[var(--color-accent-secondary)]">{String(i + 1).padStart(2, '0')}</span>
               {step}
             </div>
           ))}
         </div>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-[var(--color-text)]">Key Features</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature) => (
-            <div
-              key={feature.title}
-              className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-5 shadow-[0_1px_0_rgba(0,0,0,0.04)]"
-            >
-              <p className="text-sm font-semibold uppercase tracking-wide text-[var(--color-text-secondary)]">
-                {feature.title}
-              </p>
-              <p className="mt-2 text-base leading-relaxed text-[var(--color-text-secondary)]">
-                {feature.description}
-              </p>
-            </div>
+      {/* TECH STACK SECTION */}
+      <section className="tech-border relative bg-[var(--color-surface-muted)] p-8">
+        <div className="absolute top-0 left-0 h-4 w-4 border-t-2 border-l-2 border-[var(--color-accent)]" />
+        <h2 className="text-lg font-black text-[var(--color-accent)]">Tech Stack</h2>
+        <div className="mt-4 flex flex-wrap gap-3">
+          {stack.map((item) => (
+            <span key={item} className="border border-[var(--color-border)] px-4 py-2 text-sm font-bold uppercase text-[var(--color-text)]">
+               {item}
+            </span>
           ))}
         </div>
       </section>
 
-      <section className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-6 shadow-[0_1px_0_rgba(0,0,0,0.04)]">
-          <h2 className="text-xl font-semibold text-[var(--color-text)]">Tech Stack</h2>
-          <ul className="mt-3 space-y-2 text-[var(--color-text-secondary)]">
-            {stack.map((item) => (
-              <li key={item} className="text-base leading-relaxed">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-6 shadow-[0_1px_0_rgba(0,0,0,0.04)]">
-          <h2 className="text-xl font-semibold text-[var(--color-text)]">Results</h2>
-          <ul className="mt-3 space-y-2 text-[var(--color-text-secondary)]">
-            {results.map((item) => (
-              <li key={item} className="text-base leading-relaxed">
-                {item}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-3 text-sm text-[var(--color-text-secondary)]">*ใส่ตัวเลขจริงเมื่อพร้อม</p>
-        </div>
-      </section>
-
-      <section className="space-y-4">
-        <h2 className="text-2xl font-semibold text-[var(--color-text)]">Demo Preview</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {screenshots.map((shot) => (
-            <div
-              key={shot.title}
-              className="flex h-40 items-center justify-center rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] text-center text-[var(--color-text-secondary)]"
-              aria-label={shot.alt}
-            >
-              {shot.title} (placeholder)
-            </div>
-          ))}
-        </div>
-        <a
-          href="https://jobscope.streamlit.app/"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center justify-center rounded-full bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-surface)] transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
-        >
-          Try it live →
-        </a>
-      </section>
-
-      <section className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-6 shadow-[0_1px_0_rgba(0,0,0,0.04)]">
-        <h2 className="text-xl font-semibold text-[var(--color-text)]">What I’d improve next</h2>
-        <ul className="mt-3 space-y-2 text-[var(--color-text-secondary)]">
-          {improvements.map((item) => (
-            <li key={item} className="text-base leading-relaxed">
-              {item}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3 pt-4">
         <Link
           href="/projects"
-          className="inline-flex items-center justify-center rounded-full border border-[var(--color-border)] px-4 py-2 text-sm font-semibold text-[var(--color-text)] transition hover:-translate-y-0.5 hover:border-[var(--color-text)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-text)]"
+          className="inline-flex items-center justify-center border border-[var(--color-border)] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[var(--color-text)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
         >
-          ← Back to projects
+          ← Back to Projects
         </Link>
-        <a
-          href="mailto:hello@example.com"
-          className="inline-flex items-center justify-center rounded-full bg-[var(--color-accent)] px-4 py-2 text-sm font-semibold text-[var(--color-surface)] transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
-        >
-          Talk about this project
-        </a>
       </div>
     </article>
   );
