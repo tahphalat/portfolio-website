@@ -1,31 +1,63 @@
+
+import { Hero } from "./components/home/Hero";
+import { BentoGrid } from "./components/home/BentoGrid";
+
 export default function Home() {
-  const links = [
-    { label: "LinkedIn", href: "https://www.linkedin.com" },
-    { label: "Github", href: "https://github.com" },
-    { label: "Email", href: "mailto:hello@example.com" },
+  const gridItems = [
+    // {
+    //   id: "jobscope",
+    //   title: "JobScope",
+    //   subtitle: "My Projects",
+    //   href: "/projects/jobscope",
+    //   variant: "large" as const,
+    //   bgClass: "bg-zinc-900 border-zinc-800",
+    // },
+    {
+      id: "jobscope",
+      title: "JobScope",
+      subtitle: "My Projects",
+      href: "/projects/jobscope",
+      variant: "large" as const,
+      bgClass: "bg-zinc-900 border-zinc-800",
+    },
+    // {
+    //   id: "growth",
+    //   title: "Growth Analytics",
+    //   subtitle: "Dashboard",
+    //   href: "/projects/growth-analytics",
+    //   variant: "medium" as const,
+    //   bgClass: "bg-zinc-800 border-zinc-700",
+    // },
+    {
+      id: "about",
+      title: "About Me",
+      subtitle: "The Story",
+      href: "/about",
+      variant: "small" as const,
+      bgClass: "bg-[var(--color-accent)] border-[var(--color-accent)]",
+    },
+    {
+      id: "contact",
+      title: "Contact",
+      subtitle: "Get in touch",
+      href: "/contact",
+      variant: "small" as const,
+      bgClass: "bg-zinc-900 border-zinc-800",
+    },
+    {
+      id: "resume",
+      title: "Resume",
+      subtitle: "My Projects",
+      href: "/resume",
+      variant: "large" as const,
+      bgClass: "bg-zinc-900 border-zinc-800",
+    }
   ];
 
   return (
-    <section className="flex min-h-[70vh] flex-1 flex-col items-center justify-center gap-12 text-center">
-      <div className="space-y-3">
-        <p className="text-6xl font-semibold leading-tight text-[var(--color-text)] sm:text-7xl">
-          Phalat
-        </p>
-        <p className="text-6xl font-semibold leading-tight text-[var(--color-text)] sm:text-7xl">
-          Lorratthanan
-        </p>
-      </div>
-      <div className="flex flex-wrap items-center justify-center gap-6">
-        {links.map((link) => (
-          <a
-            key={link.label}
-            href={link.href}
-            className="min-w-[140px] bg-[var(--color-accent)] px-6 py-3 text-lg font-semibold text-white visited:text-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-accent)]"
-          >
-            {link.label}
-          </a>
-        ))}
-      </div>
-    </section>
+    <div className="flex flex-col gap-8">
+      <Hero />
+      <BentoGrid items={gridItems} />
+    </div>
   );
 }
