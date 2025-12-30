@@ -28,20 +28,13 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "growth-analytics",
-    title: "Growth Analytics Dashboard",
-    summary:
-      "Self-serve analytics for marketing and product teams to track activation, retention, and campaign ROI.",
-    description:
-      "Unified product telemetry, marketing spend, and CRM data. Delivered cohort views, anomaly alerts, and a metric glossary so teams could answer their own questions without waiting on ad-hoc pulls.",
-    outcome:
-      "Adoption across 4 teams in 6 weeks; cut ad-hoc data requests by 40% and improved weekly experiment velocity.",
-    timeline: "2024 · Data/Frontend",
-    tags: ["Next.js", "Tailwind", "Design Systems", "Product Analytics"],
-    links: [
-      { label: "Case study", href: "https://example.com/case-study" },
-      { label: "Live demo", href: "https://example.com/demo" },
-    ],
+    slug: "marvel-network",
+    title: "MarvelNetworkProject",
+    summary: "Network analytics playground and visualization suite — coming soon.",
+    description: "Designing a graph-based view of connections, influence, and flows. Full write-up and demo coming soon.",
+    outcome: "Case study, interactive demo, and dataset will be published shortly.",
+    timeline: "2025 · In progress",
+    tags: ["Graph", "Analytics", "Next.js"],
   },
 ];
 
