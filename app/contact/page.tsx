@@ -1,16 +1,96 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact | Phalat Lorratthanan",
 };
 
+const socialLinks = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/phalat-lorratthanan-b1a669323/", icon: "🔗" },
+  { label: "GitHub", href: "https://github.com/tahphalat", icon: "💻" },
+  { label: "Email", href: "mailto:6733164621@student.chula.ac.th", icon: "✉️" },
+];
+
 export default function ContactPage() {
   return (
-    <section className="flex flex-1 flex-col items-center gap-12 text-center">
-      <h1 className="text-5xl font-semibold text-[var(--color-text)] sm:text-6xl">
-        Contact
-      </h1>
-      <div className="h-[420px] w-full max-w-5xl rounded border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[0_1px_0_rgba(0,0,0,0.04)]" />
+    <section className="flex flex-1 flex-col gap-8">
+      {/* Header */}
+      <div className="tech-border relative bg-[var(--color-surface-muted)] p-10 md:p-14">
+        <div className="absolute top-0 left-0 h-6 w-6 border-t-2 border-l-2 border-[var(--color-accent)]" />
+        <div className="absolute bottom-0 right-0 h-6 w-6 border-b-2 border-r-2 border-[var(--color-accent)]" />
+        
+        <p className="text-xs font-bold uppercase tracking-[0.3em] text-[var(--color-accent)]">
+          Get in Touch
+        </p>
+        <h1 className="mt-2 text-5xl font-black text-[var(--color-text)] sm:text-6xl">
+          Contact
+        </h1>
+        <p className="mt-4 max-w-xl text-lg text-[var(--color-text-secondary)]">
+         Please feel free to reachout - I usually respond within one business day. 
+        </p>
+        <p className="mt-4 max-w-xl text-lg text-[var(--color-text-secondary)]">
+          สนใจร่วมงานหรือมีคำถาม? ติดต่อผมได้เลยครับ — ตอบกลับภายใน 1 วันทำการ
+        </p>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Social Links */}
+        <div className="tech-border relative bg-[var(--color-surface-muted)] p-8">
+          <div className="absolute top-0 left-0 h-4 w-4 border-t-2 border-l-2 border-[var(--color-accent-secondary)]" />
+          <h2 className="text-lg font-black text-[var(--color-accent)]">Connect</h2>
+          <div className="mt-6 space-y-4">
+            {socialLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-4 border border-[var(--color-border)] p-4 transition hover:border-[var(--color-accent)] hover:bg-[var(--color-surface)]"
+              >
+                <span className="text-2xl">{link.icon}</span>
+                <span className="text-lg font-bold uppercase text-[var(--color-text)]">{link.label}</span>
+                <span className="ml-auto text-[var(--color-accent)]">↗</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Quick CTA */}
+        <div className="tech-border relative bg-[var(--color-surface-muted)] p-8">
+          <div className="absolute top-0 left-0 h-4 w-4 border-t-2 border-l-2 border-[var(--color-accent)]" />
+          <h2 className="text-lg font-black text-[var(--color-accent)]">Quick Actions</h2>
+          <div className="mt-4 flex gap-3">
+            <Link
+              href="/resume"
+              className="flex-1 border border-[var(--color-border)] py-3 text-center text-sm font-bold uppercase text-[var(--color-text)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+            >
+              View Resume
+            </Link>
+            <Link
+              href="/projects"
+              className="flex-1 border border-[var(--color-border)] py-3 text-center text-sm font-bold uppercase text-[var(--color-text)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+            >
+              See Projects
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <div className="flex items-center justify-between gap-3">
+        <Link
+          href="/about"
+          className="inline-flex items-center justify-center border border-[var(--color-border)] px-6 py-3 text-sm font-bold uppercase tracking-wider text-[var(--color-text)] transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
+        >
+          ← About
+        </Link>
+        <Link
+          href="/resume"
+          className="inline-flex items-center justify-center bg-[var(--color-accent)] px-6 py-3 text-sm font-bold uppercase tracking-wider text-white transition hover:brightness-110"
+        >
+          Resume →
+        </Link>
+      </div>
     </section>
   );
 }
