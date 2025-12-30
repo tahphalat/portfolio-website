@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 
@@ -13,11 +14,20 @@ const skills = [
 ];
 
 const timeline = [
-  { year: "2024", title: "Data Product Intern", company: "TBD", description: "Building data pipelines and analytics dashboards." },
-  { year: "2023", title: "Software Engineering Student", company: "Chulalongkorn University", description: "Studying computer engineering with focus on data systems." },
+  { year: "2024", job_title: "Web Developer Intern", company: "RELEARN SOLUTION CO., LTD.", description: "Developed and maintained web applications by fixing bugs and implementing assigned features." },
+  { year: "2024", job_title: "Web Developer Intern", company: "Social Security Office of Thailand (sso.go.th)", description: "Developed frontend interfaces and backend services for goverment web systems." },
+  { year: "2024", job_title: "Web Developer Intern", company: "Pasona360", description: "Developed and enhanced web application features, collaborating with designers to deliver features aligned with business requirements." },
 ];
 
 export default function AboutPage() {
+  const timelineByYear = timeline
+    .slice()
+    .sort((a, b) => Number(b.year) - Number(a.year))
+    .reduce<Record<string, typeof timeline>>((acc, item) => {
+      acc[item.year] = acc[item.year] ? [...acc[item.year], item] : [item];
+      return acc;
+    }, {});
+
   return (
     <section className="flex flex-1 flex-col gap-8">
       {/* Header */}
@@ -36,12 +46,16 @@ export default function AboutPage() {
       {/* Bio Section */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Photo Placeholder */}
-        <div className="tech-border relative flex aspect-square items-center justify-center bg-[var(--color-surface-muted)]">
+        <div className="tech-border relative flex aspect-square items-center justify-center overflow-hidden bg-[var(--color-surface-muted)]">
           <div className="absolute top-0 left-0 h-4 w-4 border-t-2 border-l-2 border-[var(--color-accent-secondary)]" />
-          <span className="text-6xl">👤</span>
-          <span className="absolute bottom-4 text-xs font-bold uppercase tracking-wider text-[var(--color-text-secondary)]">
-            Photo Placeholder
-          </span>
+          <Image
+            src="/myPhoto2.png"
+            alt="Portrait of Phalat Lorratthanan"
+            fill
+            className="object-cover"
+            sizes="(min-width: 1024px) 33vw, 80vw"
+            priority
+          />
         </div>
 
         {/* Bio Text */}
@@ -49,13 +63,15 @@ export default function AboutPage() {
           <div className="absolute top-0 left-0 h-4 w-4 border-t-2 border-l-2 border-[var(--color-accent)]" />
           <h2 className="text-lg font-black text-[var(--color-accent)]">Bio</h2>
           <p className="mt-4 text-lg leading-relaxed text-[var(--color-text-secondary)]">
-            สวัสดีครับ! ผมเป็นนักศึกษาวิศวกรรมคอมพิวเตอร์ที่สนใจด้าน Data Engineering และ Analytics
-            ชอบสร้าง data products ที่แปลงข้อมูลดิบให้กลายเป็น insights ที่ใช้งานได้จริง
+            Hi! I’m a Computer Engineering student at Chulalongkorn University with a strong interest in Data Engineering and Analytics.
+I enjoy building data products that transform raw data into actionable, real-world insights.
           </p>
-          <p className="mt-3 text-lg leading-relaxed text-[var(--color-text-secondary)]">
-            (ใส่ข้อมูลจริงของคุณที่นี่ — เล่าเรื่องราวการเริ่มต้นเขียนโค้ด, สิ่งที่สนใจ, และเป้าหมายอาชีพ)
+          <p className="mt-4 text-lg leading-relaxed text-[var(--color-text-secondary)]">
+            สวัสดีครับ ผมเป็นนิสิตวิศวกรรมคอมพิวเตอร์ที่สนใจด้าน Data Engineering และ Analytics
+            ผมชอบสร้าง data products ที่แปลงข้อมูลดิบให้กลายเป็น insights ที่ใช้งานได้จริง
           </p>
         </div>
+
       </div>
 
       {/* Skills Grid */}
@@ -88,15 +104,23 @@ export default function AboutPage() {
         <div className="absolute top-0 left-0 h-4 w-4 border-t-2 border-l-2 border-[var(--color-accent)]" />
         <h2 className="text-lg font-black text-[var(--color-accent)]">Experience</h2>
         <div className="mt-6 space-y-6">
-          {timeline.map((item) => (
-            <div key={item.year} className="flex gap-6">
+          {Object.entries(timelineByYear).map(([year, items]) => (
+            <div key={year} className="flex gap-6">
               <span className="font-mono text-2xl font-black text-[var(--color-accent-secondary)]">
-                {item.year}
+                {year}
               </span>
-              <div>
-                <h3 className="text-lg font-bold uppercase text-[var(--color-text)]">{item.title}</h3>
-                <p className="text-sm text-[var(--color-text-secondary)]">{item.company}</p>
-                <p className="mt-1 text-sm text-[var(--color-text-secondary)]">{item.description}</p>
+              <div className="space-y-4">
+                {items.map((item, idx) => (
+                  <div key={`${year}-${idx}`}>
+                    <h3 className="text-lg font-bold uppercase text-[var(--color-text)]">
+                      {item.company}
+                    </h3>
+                    <p className="text-sm text-[var(--color-text-secondary)]">{item.job_title}</p>
+                    <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           ))}

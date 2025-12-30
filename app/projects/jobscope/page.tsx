@@ -4,8 +4,8 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Header } from "./components/Header";
-import { StatsOverview } from "./components/StatsOverview";
-import { SkillTrends } from "./components/SkillTrends";
+import { type StatCardProps, StatsOverview } from "./components/StatsOverview";
+import { type SkillData, SkillTrends } from "./components/SkillTrends";
 
 const heroSubtitle =
   "End-to-end data pipeline สำหรับวิเคราะห์ตลาดงาน: จาก raw job postings → curated insight พร้อม interactive dashboard";
@@ -25,8 +25,8 @@ const stack = [
 ];
 
 export default function JobScopePage() {
-  const [stats, setStats] = useState<any[]>([]);
-  const [skills, setSkills] = useState<any[]>([]);
+  const [stats, setStats] = useState<StatCardProps[]>([]);
+  const [skills, setSkills] = useState<SkillData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,12 +34,16 @@ export default function JobScopePage() {
       try {
         // Fetch Skills
         const skillsRes = await fetch("/data/skills.json");
-        const skillsData = await skillsRes.json();
+        const skillsData: SkillData[] = await skillsRes.json();
         setSkills(skillsData.slice(0, 5));
 
         // Fetch KPI stats
         const kpiRes = await fetch("/data/kpi_summary.json");
-        const kpiData = await kpiRes.json();
+        const kpiData: {
+          total_jobs?: number;
+          unique_companies?: number;
+          top_locations?: { location_text?: string; count?: number }[];
+        } = await kpiRes.json();
         
         setStats([
           { 
@@ -77,7 +81,7 @@ export default function JobScopePage() {
         subtitle={heroSubtitle}
         links={{
           demo: "https://jobscope.streamlit.app/",
-          github: "https://github.com/your-handle/jobscope",
+          github: "https://github.com/tahphalat/job-market-analytics-recsys",
         }}
         tags={["Data Pipeline", "Analytics", "Streamlit", "Python"]}
       />

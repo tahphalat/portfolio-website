@@ -23,7 +23,7 @@ export const projects: Project[] = [
     tags: ["Data Pipeline", "Analytics", "Streamlit", "Python"],
     links: [
       { label: "Live Demo", href: "https://jobscope.streamlit.app/" },
-      { label: "GitHub", href: "https://github.com/your-handle/jobscope" },
+      { label: "GitHub", href: "https://github.com/tahphalat/job-market-analytics-recsys" },
       { label: "Dataset", href: "https://www.kaggle.com/" },
     ],
   },

@@ -1,5 +1,5 @@
 
-interface StatCardProps {
+export interface StatCardProps {
   label: string;
   value: string | number;
   subtext?: string;

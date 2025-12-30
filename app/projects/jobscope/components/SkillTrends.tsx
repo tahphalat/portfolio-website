@@ -1,5 +1,5 @@
 
-interface SkillData {
+export interface SkillData {
   name: string;
   count: number;
   percent: number;

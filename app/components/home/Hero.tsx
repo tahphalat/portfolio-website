@@ -17,7 +17,7 @@ export function Hero() {
           Phalat
         </h1>
         <p className="max-w-md text-lg font-bold tracking-[0.3em] uppercase text-[var(--color-accent)]">
-          Data Product & Frontend Engineer
+          Chulalongkorn University, COMPUTER ENGINEERING & DIGITAL TECHNOLOGY
         </p>
       </div>
 

@@ -1,6 +1,4 @@
 
-import Link from "next/link";
-
 interface HeaderProps {
   title: string;
   subtitle: string;

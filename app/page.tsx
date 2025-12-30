@@ -4,22 +4,30 @@ import { BentoGrid } from "./components/home/BentoGrid";
 
 export default function Home() {
   const gridItems = [
+    // {
+    //   id: "jobscope",
+    //   title: "JobScope",
+    //   subtitle: "My Projects",
+    //   href: "/projects/jobscope",
+    //   variant: "large" as const,
+    //   bgClass: "bg-zinc-900 border-zinc-800",
+    // },
     {
       id: "jobscope",
       title: "JobScope",
-      subtitle: "Data Product",
+      subtitle: "My Projects",
       href: "/projects/jobscope",
       variant: "large" as const,
       bgClass: "bg-zinc-900 border-zinc-800",
     },
-    {
-      id: "growth",
-      title: "Growth Analytics",
-      subtitle: "Dashboard",
-      href: "/projects/growth-analytics",
-      variant: "medium" as const,
-      bgClass: "bg-zinc-800 border-zinc-700",
-    },
+    // {
+    //   id: "growth",
+    //   title: "Growth Analytics",
+    //   subtitle: "Dashboard",
+    //   href: "/projects/growth-analytics",
+    //   variant: "medium" as const,
+    //   bgClass: "bg-zinc-800 border-zinc-700",
+    // },
     {
       id: "about",
       title: "About Me",
@@ -36,6 +44,14 @@ export default function Home() {
       variant: "small" as const,
       bgClass: "bg-zinc-900 border-zinc-800",
     },
+    {
+      id: "resume",
+      title: "Resume",
+      subtitle: "My Projects",
+      href: "/resume",
+      variant: "large" as const,
+      bgClass: "bg-zinc-900 border-zinc-800",
+    }
   ];
 
   return (

@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <NavBar />
         <main className="mx-auto flex min-h-[calc(100vh-96px)] w-full max-w-6xl flex-col px-6 pb-20 pt-16 md:px-10">
-          <BackButton className="mb-6 self-start" />
+          <BackButton className="mb-3 self-start" />
           {children}
         </main>
       </body>

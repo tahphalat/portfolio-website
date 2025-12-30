@@ -6,9 +6,9 @@ export const metadata: Metadata = {
 };
 
 const socialLinks = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/your-profile", icon: "🔗" },
-  { label: "GitHub", href: "https://github.com/your-handle", icon: "💻" },
-  { label: "Email", href: "mailto:your.email@example.com", icon: "✉️" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/phalat-lorratthanan-b1a669323/", icon: "🔗" },
+  { label: "GitHub", href: "https://github.com/tahphalat", icon: "💻" },
+  { label: "Email", href: "mailto:6733164621@student.chula.ac.th", icon: "✉️" },
 ];
 
 export default function ContactPage() {
